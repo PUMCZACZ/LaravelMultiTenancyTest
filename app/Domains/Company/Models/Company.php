@@ -24,6 +24,7 @@ use Illuminate\Support\Collection;
 class Company extends Model
 {
     use HasFactory;
+
     protected $table = 'companies';
 
     /**

@@ -7,6 +7,7 @@ use App\Domains\Company\Models\Company;
 use App\Domains\Learning\Models\LearningPathMedal;
 use App\Domains\MyStoryTrainings\Models\MyStoryTraining;
 use App\Domains\Tenant\Models\Tenant;
+use App\Domains\User\Factories\UserFactory;
 use App\Domains\User\Scopes\TenantScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -75,11 +76,17 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function booted()
+    protected static function booted(): void
     {
         /*** @var User $authUser */
         $authUser = Auth::user();
+
         static::addGlobalScope(new TenantScope($authUser));
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 
     public function storyTrainings(): HasMany
@@ -110,10 +117,5 @@ class User extends Authenticatable
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
-    }
-
-    public function admin()
-    {
-        $this->assignRole('admin');
     }
 }

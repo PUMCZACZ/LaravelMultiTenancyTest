@@ -2,11 +2,12 @@
 
 namespace App\Domains\Tenant\Factories;
 
-use App\Domains\Company\Factories\CompanyFactory;
+use App\Domains\Tenant\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TenantFactory extends Factory
 {
+    protected $model = Tenant::class;
     /**
      * Define the model's default state.
      *
@@ -16,7 +17,6 @@ class TenantFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'company_id' => self::factoryForModel(CompanyFactory::class),
         ];
     }
 }

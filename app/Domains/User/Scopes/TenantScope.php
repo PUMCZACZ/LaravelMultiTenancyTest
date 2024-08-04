@@ -10,14 +10,18 @@ use Illuminate\Database\Eloquent\Scope;
 readonly class TenantScope implements Scope
 {
 
-    public function __construct(private User $user)
+    public function __construct(private ?User $user)
     {
     }
     /**
      * Apply the scope to a given Eloquent query builder.
      */
-    public function apply(Builder $builder, Model $model): Builder
+    public function apply(Builder $builder, Model $model): void
     {
-        return $builder->where('tenant_id', $this->user->tenant_id);
+        if (!$this->user) {
+            return;
+        }
+
+        $builder->where('tenant_id', $this->user->tenant_id);
     }
 }

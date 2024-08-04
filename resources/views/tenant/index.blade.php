@@ -9,25 +9,31 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+
+                    <a class="font-bold mb-3" href="{{ route('tenant.switch-role', auth()->user()) }}">
+                        Switch role {{ auth()->user()->hasRole(\App\Domains\User\Roles\RolesEnum::USER->value) ? 'admin' : 'user' }}
+                    </a>
                     <table class="table-auto">
                         <thead>
-                            <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-neutral-900 dark:even:bg-neutral-800">
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Name</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Last Name</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Email</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Tenant id</th>
+                            <tr class="odd:bg-white even:bg-gray-100">
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name</th>
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Last Name</th>
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Email</th>
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tenant id</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        @foreach($users as $user)
-                            <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-neutral-900 dark:even:bg-neutral-800">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $user->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $user->last_name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $user->email }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $user->tenant->id }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
+                        @can(\App\Domains\User\Roles\PermissionEnum::TENANT_VIEW->value)
+                            <tbody>
+                                @foreach($users as $user)
+                                    <tr class="odd:bg-white even:bg-gray-100">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ $user->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ $user->last_name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ $user->email }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ $user->tenant->id }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        @endcan
                     </table>
                 </div>
             </div>
