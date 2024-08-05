@@ -9,10 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-
-                    <a class="font-bold mb-3" href="{{ route('tenant.switch-role', auth()->user()) }}">
-                        Switch role {{ auth()->user()->hasRole(\App\Domains\User\Roles\RolesEnum::USER->value) ? 'admin' : 'user' }}
-                    </a>
                     <table class="table-auto">
                         <thead>
                             <tr class="odd:bg-white even:bg-gray-100">

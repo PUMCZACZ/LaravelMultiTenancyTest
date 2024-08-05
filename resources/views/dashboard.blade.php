@@ -10,6 +10,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
+
+                    <div class="mt-4">
+                        <p>Need admin role to see Tenants view</p>
+                        <a class="text-2xl font-bold mb-3" href="{{ route('tenant.switch-role', auth()->user()) }}">
+                            Switch role {{ auth()->user()->hasRole(\App\Domains\User\Roles\RolesEnum::USER->value) ? 'admin' : 'user' }}
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
