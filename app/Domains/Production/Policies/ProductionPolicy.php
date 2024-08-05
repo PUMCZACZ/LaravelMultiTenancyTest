@@ -6,6 +6,7 @@ use App\Domains\Learning\Models\LearningPathMedal;
 use App\Domains\MyStoryTrainings\Models\MyStoryTraining;
 use App\Domains\Production\Models\Production;
 use App\Domains\User\Models\User;
+use Illuminate\Support\Facades\DB;
 
 final class ProductionPolicy
 {
@@ -18,6 +19,9 @@ final class ProductionPolicy
      */
     public function view(User $user, Production $production): bool
     {
-       return $user->productions()->where('production_id', $production->id)->exists();
+       return DB::table('user_production')
+           ->where('production_id', $production->id)
+           ->where('user_id', $user->id)
+           ->exists();
     }
 }

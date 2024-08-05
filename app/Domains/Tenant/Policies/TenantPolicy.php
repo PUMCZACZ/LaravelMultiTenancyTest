@@ -7,6 +7,7 @@ use App\Domains\MyStoryTrainings\Models\MyStoryTraining;
 use App\Domains\Production\Models\Production;
 use App\Domains\Tenant\Models\Tenant;
 use App\Domains\User\Models\User;
+use App\Domains\User\Roles\RolesEnum;
 use function Symfony\Component\Translation\t;
 
 final class TenantPolicy
@@ -19,7 +20,7 @@ final class TenantPolicy
      */
     public function view(User $user): bool
     {
-        if (!$user->tenant_id) {
+        if (!$user->hasRole(RolesEnum::ADMIN->value)) {
             return false;
         }
 

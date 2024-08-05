@@ -4,10 +4,10 @@ namespace App\Domains\Chapter\Policies;
 
 use App\Domains\Chapter\Models\Chapter;
 use App\Domains\User\Models\User;
+use Illuminate\Support\Facades\DB;
 
 final class ChapterPolicy
 {
-
     /**
      * Determine when user can see chapters
      *
@@ -17,6 +17,9 @@ final class ChapterPolicy
      */
     public function view(User $user, Chapter $chapter): bool
     {
-        return $user->chapters()->where('chapter_id', $chapter->id)->exists();
+        return DB::table('user_chapter')
+            ->where('chapter_id', $chapter->id)
+            ->where('user_id', $user->id)
+            ->exists();
     }
 }
