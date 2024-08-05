@@ -6,6 +6,7 @@ use App\Domains\Chapter\Models\Chapter;
 use App\Domains\Company\Models\Company;
 use App\Domains\Learning\Models\LearningPathMedal;
 use App\Domains\MyStoryTrainings\Models\MyStoryTraining;
+use App\Domains\Production\Models\RentedProduction;
 use App\Domains\Tenant\Models\Tenant;
 use App\Domains\User\Factories\UserFactory;
 use App\Domains\User\Scopes\TenantScope;
@@ -26,9 +27,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string password
  *
  * Relationships
- * @property-read|@method MyStoryTraining storyTrainings()
- * @property-read|@method LearningPathMedal learningPathMedals()
- * @property-read|@method AsyncSession asyncSessions()
+ * @property-read MyStoryTraining[] storyTrainings
+ * @property-read LearningPathMedal[] learningPathMedals
+ * @property-read AsyncSession[] asyncSessions
  * @property-read Company company_id
  * @property-read Tenant tenant_id
  */
@@ -97,6 +98,11 @@ class User extends Authenticatable
     public function learningPathMedals(): BelongsToMany
     {
         return $this->belongsToMany(LearningPathMedal::class);
+    }
+
+    public function rentedProduction(): HasMany
+    {
+        return $this->hasMany(RentedProduction::class);
     }
 
     public function asyncSessions(): BelongsToMany

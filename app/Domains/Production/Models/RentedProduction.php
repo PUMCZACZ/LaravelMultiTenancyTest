@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon rental_date
  *
  * Relationships
- * @property-read User user
+ * @property-read User user_id
  */
 class RentedProduction extends Model
 {
